@@ -10,9 +10,9 @@ export default function App  ()  {
   return (
    <SafeAreaView className = "bg-gray-200 h-full"> 
         <ScrollView contentContainerStyle ={{height: "100%"}}>
-            <View className = " justify-center mt-10 w-full min-h-[85vph]">
-              <View className = "flex-row ">
-              <Image source={images.image}  className="w-20 h-20 right-7" resizeMode='contain' />
+            <View className = " justify-center mt-10 w-full min-h-[85vp] px-5 ">
+              <View className = " items-center ">
+              {/* <Image source={images.image}  className="w-20 h-20 right-20" resizeMode='contain' /> */}
               <Text className ="text-secondary-100 font-pbold text-2xl mt-5 px-14 "> CashFlow</Text>
 
 
@@ -46,7 +46,7 @@ export default function App  ()  {
 
             
         </ScrollView>
-        {/* <StatusBar style="dark"  backgroundColor="#161622" /> */}
+        <StatusBar style="light"  backgroundColor="#161622" />
 
    </SafeAreaView>
   )
