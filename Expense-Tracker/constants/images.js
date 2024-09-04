@@ -5,7 +5,7 @@ import path from "../assets/images/path.png";
 import logo from "../assets/images/logo.png";
 import logoSmall from "../assets/images/logo-small.png";
 import empty from "../assets/images/empty.png";
-import image from "./assets/images/image.png";
-import frame from "./assets/images/frame.png";
+import image from "../assets/images/sideImage.png";
+import frame from "../assets/images/Frame.png";
 
 export default { profile, thumbnail, cards, path, logo, logoSmall, empty , image , frame};
