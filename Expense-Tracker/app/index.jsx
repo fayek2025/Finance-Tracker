@@ -13,7 +13,7 @@ export default function App  ()  {
             <View className = " justify-center mt-10 w-full min-h-[85vph]">
               <View className = "flex-row ">
               <Image source={images.image}  className="w-20 h-20 right-7" resizeMode='contain' />
-              <Text className ="text-secondary-100 font-pbold text-2xl mt-5 px-10 "> CashFlow</Text>
+              <Text className ="text-secondary-100 font-pbold text-2xl mt-5 px-14 "> CashFlow</Text>
 
 
               </View>

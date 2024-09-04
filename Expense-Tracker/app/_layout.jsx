@@ -5,13 +5,14 @@ import { useFonts } from "expo-font";
 
 import { NativeWindStyleSheet } from "nativewind";
 import { Stack } from 'expo-router';
+import { SplashScreen } from 'expo-router';
 // import "react-native-url-polyfill/auto";
 
 
 NativeWindStyleSheet.setOutput({
   default: "native",
 });
-// SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync();
 const Rootlayout = () => {
 
     const [fontsLoaded, error] = useFonts({
