@@ -7,7 +7,7 @@ export const useGlobalContext = () => useContext(GlobalContext);
 const GlobalProvider = ({ children }) => {
 
     const [user , setUser] = useState(null);
-    const [loading , setLoading] = useState(true);
+    const [loading , setLoading] = useState(true);  
     const [isLogged , setLogged] = useState(false);
 
     useEffect(() => {

@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { Client, Account, ID , Databases , Avatars , Query} from 'react-native-appwrite';
 import React, { useState } from 'react';
-import signIn from '../app/(auth)/signIn';
+
 
 export const appwriteConfig = {
     endpoint : 'https://cloud.appwrite.io/v1',
@@ -78,23 +78,19 @@ export const getUsers = async () => {
 
     try {
         const currentAccount = await account.get();
+        if(!currentAccount ) throw Error;
 
-        if(!currentAccount) throw new Error("Account not found");
-
-        const currentUser = await database.listDocuments( appwriteConfig.databaseId , appwriteConfig.userCollectionId,
-
-            [Query.equal("accountId" , currentAccount.$id)] 
-
-
-
+        const currentUser = await database.listDocuments( appwriteConfig.databaseId,    
+            appwriteConfig.userCollectionId,
+            [Query.equal('accountId', currentAccount.$id)],
+        
         );
 
-        if(!currentUser) throw new Error("User not found");
+        if(!currentUser) throw Error;
         return currentUser.documents[0];
-
-
-    } catch (error) {
-        console.error(error);
+    }
+    catch (error) {
+        throw new Error(error);
     }
 
 

@@ -3,8 +3,8 @@ import React from 'react'
 
 const home = () => {
   return (
-    <View>
-      <Text>home</Text>
+    <View className>
+      <Text>home hello 9998 hello bangladesh</Text>
     </View>
   )
 }
