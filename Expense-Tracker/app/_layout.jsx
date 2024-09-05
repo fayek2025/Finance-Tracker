@@ -6,8 +6,8 @@ import { useFonts } from "expo-font";
 import { NativeWindStyleSheet } from "nativewind";
 import { Stack } from 'expo-router';
 import { SplashScreen } from 'expo-router';
-// import "react-native-url-polyfill/auto";
-
+import "react-native-url-polyfill/auto";
+import  GlobalProvider  from '../context/globalContex';
 
 NativeWindStyleSheet.setOutput({
   default: "native",
@@ -27,16 +27,34 @@ const Rootlayout = () => {
         "Poppins-Thin": require("../assets/fonts/Poppins-Thin.ttf"),
       });
 
+      useEffect(() => {
+        if (error) throw error;
+    
+        if (fontsLoaded) {
+          SplashScreen.hideAsync();
+        }
+      }, [fontsLoaded, error]);
+    
+      if (!fontsLoaded) {
+        return null;
+      }
+    
+      if (!fontsLoaded && !error) {
+        return null;
+      }
+
     
     return (
+      <GlobalProvider>
            <Stack>
-            <Stack.Screen name="index" options={{headerShown : false}} />
+              <Stack.Screen name="index" options={{headerShown : false}} />
                 <Stack.Screen name = "(auth)" options={{headerShown : false}}/>
                 
 
 
-           </Stack>
-   
+            </Stack>
+            </GlobalProvider>
+    
     );
 };
 

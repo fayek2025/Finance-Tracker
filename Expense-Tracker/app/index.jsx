@@ -4,9 +4,22 @@ import { ScrollView } from 'react-native'
 import images from '../constants/images'
 import CustomButton from '../components/CustomButton'
 import { StatusBar } from 'expo-status-bar'
-import { router } from 'expo-router'
+import { Redirect, router } from 'expo-router'
+import { useGlobalContext } from '../context/globalContex'
 
 export default function App  ()  {
+
+  const {loading , isLogged} = useGlobalContext();
+
+
+
+ if (!loading && isLogged)
+ {
+  return <Redirect href= "/home" />;
+ }
+
+
+
   return (
    <SafeAreaView className = "bg-gray-200 h-full"> 
         <ScrollView contentContainerStyle ={{height: "100%"}}>
