@@ -6,20 +6,57 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import { Alert } from 'react-native'
 import ValueField from './ValueField'
 import CustomButton from './CustomButton'
-const CustomAccounts = () => {
+import { addAccount } from '../lib/appwrite'
+import { useGlobalContext } from '../context/globalContex'
 
-    const [form, setForm] = useState({
-        accountName: "",
-        amount: ""
-    })
+const CustomAccounts = ({title}) => {
+
+
+  const {user} = useGlobalContext();
+
+  const [form, setForm] = useState({
+    accountName: "",
+    amount: ""
+})
+
+  const [submiting , setSubmiting] = useState(false);
+
+  const handlePress = async () => {
+
+    if(form.accountName === "" || form.amount === ""){
+      Alert.alert("Error" , "Please fill in all fields")
+    }
+    setSubmiting(true);
+    const amountAsInteger = parseInt(form.amount, 10);
+
+    try{
+      await addAccount(form.accountName , amountAsInteger , user.$id);
+     
+      
+      setModalVisible(false);
+
+    }catch (error){
+      console.error(error);
+    }finally{
+      setSubmiting(false);
+    }
+  
+  
+  
+  }
+  
+
+
+  
+
+   
   
     const [modalVisible, setModalVisible] = useState(false);  
     return (
-        <View className = "w-full h-full">
-                         {form.accountName !== "" && form.amount !== "" && (
-  <Text className="text-white text-psemibold mt-5 px-14">{form.amount}</Text>
-)}
-    <View className="p-5 w-[150px] h-[200px]">
+       
+  
+
+    <View className="p-5 w-[150px] h-[150px]">
 
 
         <TouchableOpacity
@@ -29,7 +66,7 @@ const CustomAccounts = () => {
              <FontAwesome5  name="plus" size={24} color="white" />
 
           <Text className="text-white font-pregular text-sm">
-            Account 
+            {title}
           </Text>
         </TouchableOpacity>
 
@@ -55,24 +92,25 @@ const CustomAccounts = () => {
               </TouchableOpacity>
             </View>
             
-              <Text className="text-gray-100 font-psemibold text-3xl mt-5">Add Account</Text>
+              <Text className="text-gray-100 font-psemibold text-3xl mt-5 ">Add Account</Text>
 
                 <ValueField 
-                 placeholder="Enter Account Name"
+                 placeholder="Name"
                  value={form.accountName} // The actual value of the field
             onChangeText={(e) => setForm({ ...form, accountName: e })}
                 
                 
                 />
                 <ValueField     
-                placeholder="Enter Amount" 
+                placeholder="Amount" 
                 value={form.amount} // The actual value of the field
                 onChangeText={(e) => setForm({ ...form, amount: e })}
+                keybaordType="numeric"
                 
                 />
                 <CustomButton title="Add Account" 
                 textStyles={"font-psemibold text-lg"}
-                handlePress={() => console.log(form)}
+                handlePress={handlePress}
                 />
                
               
@@ -83,8 +121,9 @@ const CustomAccounts = () => {
        
       </View>
 
-      </View>
+     
   )
 }
+
 
 export default CustomAccounts

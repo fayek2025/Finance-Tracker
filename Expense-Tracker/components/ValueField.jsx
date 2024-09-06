@@ -3,19 +3,20 @@ import React, { useState } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 
-const ValueField = ({title , value , placeholder , handleText , otherstyles , ...props}) => {
+const ValueField = ({title , value , placeholder , handleText , keybaordType, otherstyles , ...props}) => {
  
   return (
     <View className="space-y-2">
       <Text className="text-gray-100 font-psemibold text-lg mt-3">{title}</Text>
-      <View className="border bg-gray-100 rounded-xl focus:border-secondary-300 focus:border-b-4 w-full h-16 border-2 flex flex-row items-center ">
+      <View className="  border-transparent bg-transparent rounded-xl  h-16 flex flex-row items-center justify-center " >
       <TextInput
         placeholder={placeholder}
-        
+        placeholderTextColor={"#9CA3AF"}
         value={value}
         onChangeText={handleText}
-        className={`text-black text-base flex-1 font-psemibold px-3 ${otherstyles}`}
-        
+        className="block  py-3 px-3 font-pbold text-base text-black bg-transparent border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-secondary-200  focus:secondary-200 peer  justify-center w-full"
+        keyboardType={ keybaordType}
+        numberOfLines={1}
         {...props}
       />
 

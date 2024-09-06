@@ -5,18 +5,25 @@ import CustomAccounts from '../../components/CustomAccounts'
 import useAppwrite  from '../../lib/useAppwrite'
 import { getExpenses } from '../../lib/appwrite'
 import HorizontalCard from '../../components/HorizontalCard'
+import { addAccount } from '../../lib/appwrite'
+import { RefreshControl } from 'react-native'
+import { useGlobalContext } from '../../context/globalContex'
+import { getAccounts } from '../../lib/appwrite'
 const home = () => {
+  const {user} = useGlobalContext();
 
-  const {data:posts , loading , refetch} = useAppwrite(getExpenses);
+  const {data:posts , loading , refetch} = useAppwrite(() => getExpenses(user.$id));
+  const {data:accounts , refetch: refetchAccount} = useAppwrite(() => getAccounts(user.$id));
 
   const [refreshing, setRefreshing] = useState(false)
 
   const OnRefresh = async () => { // why use async here?
     setRefreshing(true)
     await refetch()
+    await refetchAccount()
     setRefreshing(false)
   }
-  console.log(posts);
+  console.log(accounts);
 
   return (
     <SafeAreaView className = "bg-gray-200 h-full">
@@ -28,6 +35,7 @@ const home = () => {
       renderItem={({item}) => (
         <View>
             <Text className= "text-white text-lg px-3 font-pbold" >{item.title}</Text>
+            <Text className= "text-white text-lg px-3 font-pbold" >{item.user.username}</Text>
         
         
 
@@ -42,7 +50,7 @@ const home = () => {
             <View>
 
             <Text className ="text-white font-psemibold text-lg">Welcome</Text>
-            <Text className ="text-white font-psemibold text-secondary-200">Fayek</Text>
+            <Text className ="text-white font-psemibold text-secondary-200"> {user.username}</Text>
             </View>
 
             <View className="mt-5 px-2">
@@ -54,7 +62,7 @@ const home = () => {
 
             <View className = "w-full flex-1">
                      
-                      <HorizontalCard posts ={posts.documents}/>
+                      <HorizontalCard posts ={accounts.documents}/>
                       
 
                     </View>
@@ -64,7 +72,7 @@ const home = () => {
       )}
 
      
-
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={OnRefresh} />}
       
       
       

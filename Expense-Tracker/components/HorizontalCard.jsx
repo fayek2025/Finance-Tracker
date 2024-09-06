@@ -8,9 +8,12 @@ const HorizontalCard = ({posts}) => {
       data={posts}
         keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
-        <View className="flex flex-row">
+        <View className ="px-3 mt-4 ">
+          <View className="w-[100px] h-[100px] bg-transparent border border-secondary-200 rounded-xl justify-center items-center">
+          <Text numberOfLines={1} className="text-lg font-pbold text-white absolute top-3 right-1 px-2">{item.name}</Text>
+          <Text className="text-sm font-psemibold text-gray-10 top-9 right-1 px-2 absolute">{item.amount} TK</Text>
+          </View>
           
-          <Text className="text-3xl font-psemibold text-white mt-5">{item.title}</Text>
           
          
           
@@ -21,7 +24,7 @@ const HorizontalCard = ({posts}) => {
 
     ListFooterComponent={() => (
         <View> 
-        <CustomAccounts />
+        <CustomAccounts title={"Account"}/>
 
         </View>
     )}
