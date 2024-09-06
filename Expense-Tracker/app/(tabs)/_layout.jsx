@@ -7,17 +7,17 @@ const TabIcon = ({name , color , focused , size , label}) =>
   {
       return( 
         <View className = "justify-center items-center flex">
-          <View className={`  ${focused ? " rounded-2xl " : "font-pregular"} `}>
+          
 
           <FontAwesome5  name= {name} size= {size} color= {color} />
 
 
-          </View>
+      
      
   
       <Text 
       
-      className={` font-semibold text-xs`}
+     clasName = {`text-xs  ${focused ? 'font-pextrabold' : 'text-pdmedium'}`}
       style={{ color: color }}
       > {label}</Text>
   

@@ -9,7 +9,8 @@ export const appwriteConfig = {
     projectId : '66d92e320032c13a1bd6',
     plaformId : 'com.fayek.cashflow',
     databaseId : '66d92f23001cd89377f9',
-    userCollectionId : '66d92f4c002396cd313a'
+    userCollectionId : '66d92f4c002396cd313a',
+    expenseCollectionId : '66d9d66c0034125778a4',
 }
 
 
@@ -29,7 +30,8 @@ const avatars = new Avatars(client);
 export const createUser = async (username , email , password) => {
     try {
         const newAccount = await account.create(ID.unique() , email, password, username);
-        console.log(ID.unique());
+       const randomString = Math.random().toString(36).substring(2, 15);
+        const userId = `${username.replace(/[^a-zA-Z0-9.-_]/g, "").toLowerCase()}_${randomString}`
         if(!newAccount) throw new Error("Account not found");
 
         const AvatarUrl = avatars.getInitials(username);
@@ -37,7 +39,7 @@ export const createUser = async (username , email , password) => {
         const newUser = await database.createDocument(
             appwriteConfig.databaseId,
             appwriteConfig.userCollectionId,
-            ID.unique(),
+            userId,
             {
                 accountId : newAccount.$id,
                 username,
@@ -95,3 +97,34 @@ export const getUsers = async () => {
 
 
  }
+
+
+export const addExpense = async (expense) => {
+    try {
+        const newExpense = await database.createDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.expenseCollectionId,
+            ID.unique(),
+            expense
+        );
+        if(!newExpense) throw new Error("Expense not found");
+        return newExpense;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+export const getExpenses = async () => {
+    try {
+        const expenses = await database.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.expenseCollectionId,
+            
+        );
+        if(!expenses) throw new Error("Expenses not found");
+        return expenses;
+    } catch (error) {
+        console.error(error);
+    }
+}

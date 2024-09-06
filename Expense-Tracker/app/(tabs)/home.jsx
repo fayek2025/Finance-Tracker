@@ -1,18 +1,38 @@
-import { View, Text, SafeAreaView, FlatList } from 'react-native'
+import { View, Text, SafeAreaView, FlatList, TouchableOpacity , Modal, Alert } from 'react-native'
 import React from 'react'
-
+import { useState } from 'react'
+import CustomAccounts from '../../components/CustomAccounts'
+import useAppwrite  from '../../lib/useAppwrite'
+import { getExpenses } from '../../lib/appwrite'
+import HorizontalCard from '../../components/HorizontalCard'
 const home = () => {
+
+  const {data:posts , loading , refetch} = useAppwrite(getExpenses);
+
+  const [refreshing, setRefreshing] = useState(false)
+
+  const OnRefresh = async () => { // why use async here?
+    setRefreshing(true)
+    await refetch()
+    setRefreshing(false)
+  }
+  console.log(posts);
+
   return (
     <SafeAreaView className = "bg-gray-200 h-full">
 
 
       <FlatList 
-      data={[{id:1}]}
+      data={posts.documents}
       keyExtractor={(item) => item.id}
       renderItem={({item}) => (
-        <View className="px-5">
-          <Text className="text-white">{item.id}</Text>
+        <View>
+            <Text className= "text-white text-lg px-3 font-pbold" >{item.title}</Text>
+        
+        
+
         </View>
+      
       )}
 
       ListHeaderComponent={() => (
@@ -29,16 +49,27 @@ const home = () => {
 
               <Text className="text-xl text-secondary-100 font-pbold "> CashFlow</Text>
             </View>
+           
             </View>
-          
+
+            <View className = "w-full flex-1">
+                     
+                      <HorizontalCard posts ={posts.documents}/>
+                      
+
+                    </View>
+            
+            
         </View>
       )}
+
+     
+
       
       
       
       />
-
-
+       
 
     </SafeAreaView>
   )
