@@ -49,7 +49,7 @@ const signIn = () => {
   return (
     <SafeAreaView className = "bg-gray-200 h-full">
           <ScrollView contentContainerStyle ={{height: "100%"}}>
-          <View className ="w-full justify-center min-h-[85vh] px-6">
+          <View className ="w-full justify-center min-h-[85vh]  px-6">
 
 
             <Text className="text-gray-100 font-psemibold text-2xl">Login To {''} 

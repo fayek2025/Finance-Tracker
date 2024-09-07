@@ -153,7 +153,7 @@ export const getAccounts = async (userId) => {
 }
 
 
-export const addAccount = async (name, amount , user) => {
+export const addAccount = async (name, amount , user , color) => {
     try {
         const newAccount = await database.createDocument(
             appwriteConfig.databaseId,
@@ -162,6 +162,7 @@ export const addAccount = async (name, amount , user) => {
            {
                 name,
                 amount,
+                color,
                 user
            }
         );
