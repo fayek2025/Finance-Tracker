@@ -1,17 +1,32 @@
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, Modal } from 'react-native'
 import React from 'react'
 import CustomAccounts from './CustomAccounts'
 import { StyleSheet } from 'react-native';
 import styles from 'react-native'
 import { TouchableOpacity } from 'react-native';
+import { useState } from 'react';
+import { Alert } from 'react-native';
+import { FontAwesome5 } from '@expo/vector-icons';
+import CustomButton from './CustomButton';
+import { deleteAccount } from '../lib/appwrite';
 
-const Circle = () => {
-  return <View style={styles.circle} />;
-};
+
+const HorizontalCard = ({posts , refetchAccount}) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(posts);
+
+  const handleDelete = async () => {
+    try {
+      await deleteAccount(selectedItem.$id);
+      refetchAccount();
+      setModalVisible(false);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
 
-
-const HorizontalCard = ({posts}) => {
+  
   return (
     <FlatList
       data={posts}
@@ -19,7 +34,14 @@ const HorizontalCard = ({posts}) => {
       renderItem={({ item }) => (
         <View className ="px-3 mt-4 ">
           
-            <TouchableOpacity className="h-full">
+            <TouchableOpacity className="h-full"
+            onPress={() => {
+              setModalVisible(!modalVisible)
+              setSelectedItem(item)
+            }}
+            
+            
+            >
           <View 
             style={{borderColor: item.color}}
           className="w-40 h-40 flex-1  bg-gray-80 border rounded-xl border-secondary justify-center items-center">
@@ -38,6 +60,61 @@ const HorizontalCard = ({posts}) => {
          
           
           </TouchableOpacity>
+
+          <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            setModalVisible(!modalVisible);
+          }}
+          
+          
+          >
+
+              <View 
+               
+              className="flex justify-center  
+               h-full"
+              style={{backgroundColor: selectedItem.color}}
+              >
+                <TouchableOpacity className ="absolute left-5 top-5"
+                onPress={() => setModalVisible(!modalVisible)}
+                >
+                <FontAwesome5 name="arrow-left" size={20} color="white" className ="" />
+
+
+                </TouchableOpacity>
+                <TouchableOpacity className ="absolute right-5 top-5">
+                <FontAwesome5 name="trash" size={20} color="white" className ="" 
+                onPress={handleDelete}
+                />
+
+
+                </TouchableOpacity>
+                <View className="px-5">
+               
+                <View className="w-full bg-gray-200  h-40 justify-center items-center  rounded-xl ">
+                  
+                    <Text className="text-lg font-pbold text-secondary-100">{selectedItem.name}</Text>
+                    <Text className="text-lg font-pbold text-secondary-200"> Account Amount : {selectedItem.amount} BDT</Text>
+                  </View>
+
+                  </View>
+                  <View className="mt-5 px-5">
+                  <CustomButton title={"Edit Account"} 
+                  containerStyles={"px-5 " }
+                  textStyles={"text-black font-pbold text-lg "}
+                  
+                  />
+
+                  </View>
+              </View>
+
+           
+
+          </Modal>
           
         </View>
 
@@ -46,10 +123,12 @@ const HorizontalCard = ({posts}) => {
 
     ListFooterComponent={() => (
         <View> 
-        <CustomAccounts title={"Account"}/>
+        <CustomAccounts title={"Account"} refetchAccount={refetchAccount}/>
 
         </View>
     )}
+
+   
       horizontal
       showsHorizontalScrollIndicator={false}
       />

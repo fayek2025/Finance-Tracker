@@ -9,7 +9,7 @@ import CustomButton from './CustomButton'
 import { addAccount } from '../lib/appwrite'
 import { useGlobalContext } from '../context/globalContex'
 
-const CustomAccounts = ({title}) => {
+const CustomAccounts = ({title , refetchAccount}) => {
 
   const [selectColor , setSelectColor] = useState(null)
 
@@ -36,7 +36,7 @@ const CustomAccounts = ({title}) => {
     try{
       await addAccount(form.accountName , amountAsInteger , user.$id , selectColor);
      
-      
+      refetchAccount();
       setModalVisible(false);
 
     }catch (error){

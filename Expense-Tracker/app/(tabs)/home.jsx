@@ -62,7 +62,7 @@ const home = () => {
 
             <View className = "w-full flex-1">
                      
-                      <HorizontalCard posts ={accounts.documents}/>
+                      <HorizontalCard posts ={accounts.documents} refetchAccount = {refetchAccount}/>
                       
 
                     </View>

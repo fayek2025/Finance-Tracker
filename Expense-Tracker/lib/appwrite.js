@@ -174,3 +174,19 @@ export const addAccount = async (name, amount , user , color) => {
         console.error(error);
     }
 }   
+
+
+export const deleteAccount = async (accountId) => {
+    try {
+        const deletedAccount = await database.deleteDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.accountCollectionId,
+            accountId
+            
+        );
+        if(!deletedAccount) throw new Error("Account not found");
+        return deletedAccount;
+    } catch (error) {
+        console.error(error);
+    }
+}

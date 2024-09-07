@@ -8,6 +8,7 @@ const useAppwrite = (fn) => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
     
+    
     const fetchData = async () => {
         setLoading(true)
         try {
