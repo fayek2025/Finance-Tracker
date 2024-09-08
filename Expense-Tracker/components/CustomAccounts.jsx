@@ -9,7 +9,7 @@ import CustomButton from './CustomButton'
 import { addAccount } from '../lib/appwrite'
 import { useGlobalContext } from '../context/globalContex'
 
-const CustomAccounts = ({title , refetchAccount}) => {
+const CustomAccounts = ({title , refetchAccount , header}) => {
 
   const [selectColor , setSelectColor] = useState(null)
 
@@ -62,6 +62,7 @@ const CustomAccounts = ({title , refetchAccount}) => {
 
     <View className="p-5 w-[150px] h-[150px]">
 
+      
 
         <TouchableOpacity
           onPress={() => setModalVisible(!modalVisible)} // Set modal visible when pressed
@@ -101,7 +102,7 @@ const CustomAccounts = ({title , refetchAccount}) => {
               <View className="mt-20">
 
               
-              <Text className="text-gray-100 font-psemibold text-3xl mt-5 ">Add Account</Text>
+              <Text className="text-gray-100 font-psemibold text-3xl mt-5 ">{header}</Text>
 
                 <ValueField 
                  placeholder="Name"
@@ -129,11 +130,16 @@ const CustomAccounts = ({title , refetchAccount}) => {
       ))}
                   </View>
 
-                <CustomButton title="Create" 
+                  <View className="justify-content items-center">
+                  <CustomButton title="Create" 
                 textStyles={"font-psemibold text-lg"}
                 handlePress={handlePress}
                 containerStyles={"w-[200px] h-[50px] mt-4"}
                 />
+
+                  </View>
+
+               
                
               
             

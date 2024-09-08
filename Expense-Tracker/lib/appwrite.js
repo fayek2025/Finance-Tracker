@@ -11,7 +11,8 @@ export const appwriteConfig = {
     databaseId : '66d92f23001cd89377f9',
     userCollectionId : '66d92f4c002396cd313a',
     expenseCollectionId : '66d9d66c0034125778a4',
-    accountCollectionId : '66dabbac00037701f81c'
+    accountCollectionId : '66dabbac00037701f81c',
+    budgetCollectionId : '66dd7dc40007b3ba3ca4'
 }
 
 
@@ -187,6 +188,45 @@ export const deleteAccount = async (accountId) => {
         if(!deletedAccount) throw new Error("Account not found");
         return deletedAccount;
     } catch (error) {
+        console.error(error);
+    }
+}
+
+
+export const updateAccount = async (name  , amount ,accountId) => {
+    try {
+        const deletedAccount = await database.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.accountCollectionId,
+            accountId,
+
+            {name,
+            amount
+            
+            }
+        );
+        if(!deletedAccount) throw new Error("Account not found");
+        return deletedAccount;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+//Budgets
+
+export const getBudgets = async (userId) => {
+    try {
+        const accounts = await database.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.budgetCollectionId,
+
+            [Query.equal("user", userId)]
+            
+        );
+        if(!accounts) throw new Error("Accounts not found");
+        return accounts;
+    }catch (error) {
         console.error(error);
     }
 }

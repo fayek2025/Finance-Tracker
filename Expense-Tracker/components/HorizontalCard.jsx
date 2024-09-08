@@ -9,11 +9,42 @@ import { Alert } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import CustomButton from './CustomButton';
 import { deleteAccount } from '../lib/appwrite';
+import ValueField from './ValueField';
+import { updateAccount } from '../lib/appwrite';
+
 
 
 const HorizontalCard = ({posts , refetchAccount}) => {
+  
+  const [isEditable , setIsEditable] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(posts);
+
+
+  const [form , setForm] = useState({
+
+    name: "" ,
+    amount: ""
+  }
+   
+    
+  )
+
+  const handleupdate = async () => {
+    if (!form.name || !form.amount) {
+      
+      return;
+    }
+
+    const amountInt = parseInt(form.amount);
+    try {
+      await updateAccount( form.name, amountInt, selectedItem.$id);
+      refetchAccount();
+      setModalVisible(false);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const handleDelete = async () => {
     try {
@@ -37,7 +68,9 @@ const HorizontalCard = ({posts , refetchAccount}) => {
             <TouchableOpacity className="h-full"
             onPress={() => {
               setModalVisible(!modalVisible)
+              setForm({name: item.name , amount: item.amount})
               setSelectedItem(item)
+              
             }}
             
             
@@ -66,8 +99,9 @@ const HorizontalCard = ({posts , refetchAccount}) => {
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
+            
             setModalVisible(!modalVisible);
+            setIsEditable(!isEditable)
           }}
           
           
@@ -80,32 +114,70 @@ const HorizontalCard = ({posts , refetchAccount}) => {
               style={{backgroundColor: selectedItem.color}}
               >
                 <TouchableOpacity className ="absolute left-5 top-5"
-                onPress={() => setModalVisible(!modalVisible)}
+                onPress={() => {
+                  setModalVisible(!modalVisible)
+                  setForm({name: item.name , amount: item.amount})
+                  setIsEditable(!isEditable)
+                  
+
+                } 
+
+
+
+                }
                 >
-                <FontAwesome5 name="arrow-left" size={20} color="white" className ="" />
+                <FontAwesome5 name="arrow-left" size={20} color="white" className ="" 
+                />
 
 
                 </TouchableOpacity>
                 <TouchableOpacity className ="absolute right-5 top-5">
-                <FontAwesome5 name="trash" size={20} color="white" className ="" 
+                <FontAwesome5 name="trash" size={20} color="white" 
                 onPress={handleDelete}
                 />
+                
+
+
+                </TouchableOpacity>
+                
+                
+                <TouchableOpacity className ="absolute right-12 top-5 ">
+                <FontAwesome5 name={isEditable ? ("window-close") : ("edit")} size={20} color="white"  
+                onPress={() => setIsEditable(!isEditable)}
+                />
+                
 
 
                 </TouchableOpacity>
                 <View className="px-5">
                
-                <View className="w-full bg-gray-200  h-40 justify-center items-center  rounded-xl ">
-                  
-                    <Text className="text-lg font-pbold text-secondary-100">{selectedItem.name}</Text>
-                    <Text className="text-lg font-pbold text-secondary-200"> Account Amount : {selectedItem.amount} BDT</Text>
+                <View className="w-full bg-gray-200  h-80 justify-center items-center  rounded-xl mt-12 ">
+                    <View className=" px-9 justify-center items-center ">
+                      {isEditable && (<Text className="text-lg font-pbold text-secondary-100">Edit Account</Text>)}
+                    <ValueField 
+                     value={form.name} 
+                     placeholder={"Account Name"}  
+                     otherstyles={"bg-gray-200 "} 
+                     onChangeText={(e) => setForm({ ...form, name: e })}
+                     editable={isEditable}
+                     />
+                    <ValueField  value={form.amount?.toString()} handleText={() => {}} placeholder={"Amount"} keybaordType="numeric" otherstyles={"bg-gray-200 "} 
+                      onChangeText={(e) => setForm({ ...form, amount: e})}
+                      editable={isEditable}
+                      />
+                    
+                    </View>
+                   
+                    {/* <Text className="text-lg font-pbold text-secondary-100">{selectedItem.name}</Text>
+                    <Text className="text-lg font-pbold text-secondary-200"> Account Amount : {selectedItem.amount} BDT</Text> */}
                   </View>
 
                   </View>
                   <View className="mt-5 px-5">
-                  <CustomButton title={"Edit Account"} 
+                  <CustomButton title={"Save Changes"}
                   containerStyles={"px-5 " }
                   textStyles={"text-black font-pbold text-lg "}
+                  handlePress={handleupdate}
                   
                   />
 
@@ -123,7 +195,7 @@ const HorizontalCard = ({posts , refetchAccount}) => {
 
     ListFooterComponent={() => (
         <View> 
-        <CustomAccounts title={"Account"} refetchAccount={refetchAccount}/>
+        <CustomAccounts title={"Account"} header={"Add Account"} refetchAccount={refetchAccount}/>
 
         </View>
     )}

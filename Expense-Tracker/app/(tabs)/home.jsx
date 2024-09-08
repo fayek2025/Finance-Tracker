@@ -8,12 +8,15 @@ import HorizontalCard from '../../components/HorizontalCard'
 import { addAccount } from '../../lib/appwrite'
 import { RefreshControl } from 'react-native'
 import { useGlobalContext } from '../../context/globalContex'
-import { getAccounts } from '../../lib/appwrite'
+import { getAccounts , getBudgets} from '../../lib/appwrite'
+import BudgetFlatlist from '../../components/BudgetFlatlist'
+
 const home = () => {
   const {user} = useGlobalContext();
 
   const {data:posts , loading , refetch} = useAppwrite(() => getExpenses(user.$id));
   const {data:accounts , refetch: refetchAccount} = useAppwrite(() => getAccounts(user.$id));
+  const {data:budgets , refetch: refetchBudgets} = useAppwrite(() => getBudgets(user.$id));
 
   const [refreshing, setRefreshing] = useState(false)
 
@@ -24,6 +27,7 @@ const home = () => {
     setRefreshing(false)
   }
   console.log(accounts);
+  console.log(budgets);
 
   return (
     <SafeAreaView className = "bg-gray-200 h-full">
@@ -60,13 +64,17 @@ const home = () => {
            
             </View>
 
-            <View className = "w-full flex-1">
-                     
+            <View className = "w-full flex-1 mt-2">
+                     <Text className="text-white font-psemibold text-lg mt-3">Accounts</Text>
                       <HorizontalCard posts ={accounts.documents} refetchAccount = {refetchAccount}/>
-                      
+                    
 
                     </View>
-            
+                  
+                  <View className="w-full  mt-6">
+                  <Text className="text-primary-10 font-pbold text-lg mt-14">Budgets</Text>
+                      <BudgetFlatlist posts={budgets.documents} />
+            </View>
             
         </View>
       )}

@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 
-const ValueField = ({title , value , placeholder , handleText , keybaordType, otherstyles , ...props}) => {
+const ValueField = ({title , value , placeholder , handleText , keybaordType, otherstyles , editable , ...props  }) => {
  
   return (
     <View className="space-y-2">
@@ -17,6 +17,7 @@ const ValueField = ({title , value , placeholder , handleText , keybaordType, ot
         className="block  py-3 px-3 font-pbold text-base text-black bg-transparent border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-secondary-200  focus:secondary-200 peer  justify-center w-full"
         keyboardType={ keybaordType}
         numberOfLines={1}
+        editable={editable}
         {...props}
       />
 
