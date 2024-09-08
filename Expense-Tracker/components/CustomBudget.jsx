@@ -10,12 +10,12 @@ import { addAccount } from '../lib/appwrite'
 import { useGlobalContext } from '../context/globalContex'
 import { addBudgets } from '../lib/appwrite'
 
-const CustomAccounts = ({title , refetchAccount , refetchBudget , header}) => {
+const CustomBudget = ({title , refetchAccount , refetchBudget , header , accounts}) => {
 
   const [selectColor , setSelectColor] = useState(null)
 
 
-  const colors = ['#79c142' , '#3aa76a' , '#1ab1b7' , '#1f6f8b' , '#2a4175' , '#3f007d' , '#7a00d4' , '#b600e0' , '#e100d8' , '#ff00b8' , '#ff0074' , '#ff0000' , '#ff6a00' , '#ffcc00' , '#a6d608' , '#4f9300' , '#00a6a6' , '#0074a2' , '#004d6d' , '#002a3a' , '#000000' , '#4d4d4d' , '#7a7a7a' , '#b2b2b2' , '#e6e6e6' , '#ffffff']
+  const colors = ['#79c142' , '#3aa76a' , '#1ab1b7' , '#1f6f8b' , '#2a4175' , '#3f007d' , '#7a00d4' , '#b600e0' , '#e100d8' , '#ff00b8' , '#ff0074' , '#ff0000' , '#ff6a00' , '#ffcc00' , '#a6d608' , '#4f9300' ]
 
   const {user} = useGlobalContext();
 
@@ -107,7 +107,7 @@ const CustomAccounts = ({title , refetchAccount , refetchBudget , header}) => {
           transparent={true}
           visible={modalVisible} // Show modal based on state
           onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
+            
             setModalVisible(false); // Close modal when the request is made
           }}
         >
@@ -155,6 +155,18 @@ const CustomAccounts = ({title , refetchAccount , refetchBudget , header}) => {
         />
       ))}
                   </View>
+          <View className="flex flex-row flex-wrap justify-center rounded-xl mx-2 items-center mt-5">
+                 
+                  {/* {accounts.map((account, index) => (
+        <TouchableOpacity className="mx-2">
+            <View className = "rounded-full  bg-white justify-center items-center" >
+            <Text className="text-gray-200 font-pbold text-sm px-4 py-2 focus:outline-none border-secondary" >{account.name}</Text>
+            </View>
+        
+        </TouchableOpacity>
+               ))} */}
+
+               </View>
 
                   <View className="justify-content items-center">
                   <CustomButton title="Create" 
@@ -165,7 +177,7 @@ const CustomAccounts = ({title , refetchAccount , refetchBudget , header}) => {
 
                   </View>
 
-               
+              
                
               
             
@@ -182,4 +194,4 @@ const CustomAccounts = ({title , refetchAccount , refetchBudget , header}) => {
 }
 
 
-export default CustomAccounts
+export default CustomBudget

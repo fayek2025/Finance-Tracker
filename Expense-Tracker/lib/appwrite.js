@@ -230,3 +230,63 @@ export const getBudgets = async (userId) => {
         console.error(error);
     }
 }
+
+
+
+export const addBudgets = async (name, amount , user , color) => {
+    try {
+        const newAccount = await database.createDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.budgetCollectionId,
+            ID.unique(),
+           {
+                name,
+                amount,
+                color,
+                user
+           }
+        );
+
+        
+        if(!newAccount) throw new Error("Account not found");
+        return newAccount;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+export const deleteBudget = async (accountId) => {
+    try {
+        const deletedAccount = await database.deleteDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.budgetCollectionId,
+            accountId
+            
+        );
+        if(!deletedAccount) throw new Error("Account not found");
+        return deletedAccount;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+export const updateBudget = async (name  , amount ,accountId) => {  
+    try {
+        const deletedAccount = await database.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.budgetCollectionId,
+            accountId,
+
+            {name,
+            amount
+            
+            }
+        );
+        if(!deletedAccount) throw new Error("Account not found");
+        return deletedAccount;
+    } catch (error) {
+        console.error(error);
+    }
+}

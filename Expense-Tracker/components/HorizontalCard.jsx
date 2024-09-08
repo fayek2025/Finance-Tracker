@@ -86,7 +86,7 @@ const HorizontalCard = ({posts , refetchAccount}) => {
 
             </View>
           <Text numberOfLines={1} className="text-lg font-pbold text-white top-8 absolute right-1 px-2 mt-6">{item.name}</Text>
-          <Text className="text-lg font-psemibold text-gray-10 top-12 right-1 px-2 absolute mt-10">{item.amount} BDT</Text>
+          <Text className="text-lg font-psemibold text-primary-10 top-12 right-1 px-2 absolute mt-10">{item.amount} BDT</Text>
           </View>
           
           
@@ -117,7 +117,7 @@ const HorizontalCard = ({posts , refetchAccount}) => {
                 onPress={() => {
                   setModalVisible(!modalVisible)
                   setForm({name: item.name , amount: item.amount})
-                  setIsEditable(!isEditable)
+                  setIsEditable(false)
                   
 
                 } 
@@ -174,12 +174,14 @@ const HorizontalCard = ({posts , refetchAccount}) => {
 
                   </View>
                   <View className="mt-5 px-5">
-                  <CustomButton title={"Save Changes"}
-                  containerStyles={"px-5 " }
-                  textStyles={"text-black font-pbold text-lg "}
-                  handlePress={handleupdate}
-                  
-                  />
+                  {
+                    isEditable && (<CustomButton title={"Save Changes"}
+                      containerStyles={"px-5 " }
+                      textStyles={"text-black font-pbold text-lg "}
+                      handlePress={handleupdate}
+                      
+                      />)
+                   }
 
                   </View>
               </View>
