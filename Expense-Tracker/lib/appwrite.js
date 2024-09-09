@@ -146,6 +146,9 @@ export const getAccounts = async (userId) => {
             [Query.equal("user", userId)]
             
         );
+
+
+       
         if(!accounts) throw new Error("Accounts not found");
         return accounts;
     }catch (error) {

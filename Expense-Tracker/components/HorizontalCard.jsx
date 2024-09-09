@@ -14,7 +14,7 @@ import { updateAccount } from '../lib/appwrite';
 
 
 
-const HorizontalCard = ({posts , refetchAccount}) => {
+const HorizontalCard = ({posts , refetchAccount , expense}) => {
   
   const [isEditable , setIsEditable] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -36,7 +36,14 @@ const HorizontalCard = ({posts , refetchAccount}) => {
       return;
     }
 
-    const amountInt = parseInt(form.amount);
+    let amountInt = parseInt(form.amount);
+    expense.forEach((item) => {
+      if(item.account.$id === selectedItem.$id)
+      {
+        amountInt -= item.cost;
+      }
+      
+    })
     try {
       await updateAccount( form.name, amountInt, selectedItem.$id);
       refetchAccount();
@@ -85,8 +92,15 @@ const HorizontalCard = ({posts , refetchAccount}) => {
               />
 
             </View>
+            {
+              
+            }
           <Text numberOfLines={1} className="text-lg font-pbold text-white top-8 absolute right-1 px-2 mt-6">{item.name}</Text>
-          <Text className="text-lg font-psemibold text-primary-10 top-12 right-1 px-2 absolute mt-10">{item.amount} BDT</Text>
+          <Text className="text-lg font-psemibold text-primary-10 top-12 right-1 px-2 absolute mt-10">
+            {
+           item.amount
+              
+            } BDT</Text>
           </View>
           
           

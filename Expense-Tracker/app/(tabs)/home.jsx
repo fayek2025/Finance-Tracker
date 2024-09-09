@@ -28,7 +28,7 @@ const home = () => {
     setRefreshing(false)
   }
   console.log("Expenses", posts);
-  console.log(accounts);
+  console.log("accounts" , accounts);
   console.log(budgets);
 
   const getCurrents = new Date().getHours();
@@ -58,14 +58,14 @@ const home = () => {
       renderItem={({item}) => (
         <View className= "w-full px-5 rounded-xl">
           <TouchableOpacity>
-          <View className="flex-row justify-between items-center px-6 bg-gray-80 mt-4 py-4 rounded-xl">
+          <View className="flex-row justify-between items-center px-6 bg-gray-80 mt-4 py-4 rounded-xl mb-3">
                 <View>
                   
                   <Text className="text-white font-psemibold text-lg">{item.title}</Text>
                   <Text className="text-secondary-100 font-psemibold text-sm">{item.category}</Text>
                   
                   <Text className="text-secondary-100 font-psemibold text-sm">{new Date(item.$createdAt).toLocaleDateString('en-US', options)}</Text>
-                  <Text className="text-white font-psemibold text-sm"> {item.account[0].name}</Text>
+                  <Text className="text-white font-psemibold text-sm"> {item.account.name} {item.account.amount} </Text>
                 </View>
                 <View> 
                   <Text className="text-white font-psemibold text-lg">{item.cost} BDT</Text>
@@ -100,7 +100,7 @@ const home = () => {
 
             <View className = "w-full flex-1 mt-2">
                      <Text className="text-white font-psemibold text-lg mt-3">Accounts</Text>
-                      <HorizontalCard posts ={accounts.documents} refetchAccount = {refetchAccount} />
+                      <HorizontalCard posts ={accounts.documents} refetchAccount = {refetchAccount} expense = {posts.documents}/>
                     
 
                     </View>
