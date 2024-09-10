@@ -37,13 +37,7 @@ const HorizontalCard = ({posts , refetchAccount , expense}) => {
     }
 
     let amountInt = parseInt(form.amount);
-    expense.forEach((item) => {
-      if(item.account.$id === selectedItem.$id)
-      {
-        amountInt -= item.cost;
-      }
-      
-    })
+    
     try {
       await updateAccount( form.name, amountInt, selectedItem.$id);
       refetchAccount();

@@ -64,7 +64,30 @@ const tabs = () => {
           ),
         }}/>
 
+
+
+
+
+
+        <Tabs.Screen name='create'  
+        
+        options={{
+          title: 'Create',
+          headerShown: false,
+          tabBarIcon: ({ focused, color }) => (
+            <TabIcon name="folder-plus" color={color} size={25} focused={focused} label = "Create" />
+          ),
+        }}/>
+
+
+
+
+
     </Tabs>
+
+        
+
+
   )
 }
 

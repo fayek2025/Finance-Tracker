@@ -101,14 +101,24 @@ export const getUsers = async () => {
  }
 
 
-export const addExpense = async (expense) => {
+export const addExpense = async (title , cost , category , accountId , userId) => {
     try {
         const newExpense = await database.createDocument(
             appwriteConfig.databaseId,
             appwriteConfig.expenseCollectionId,
             ID.unique(),
-            expense
+            {
+                title , 
+                cost,
+
+                category,
+                account : accountId,
+                user : userId
+            }
+           
         );
+
+
         if(!newExpense) throw new Error("Expense not found");
         return newExpense;
     } catch (error) {
@@ -293,3 +303,7 @@ export const updateBudget = async (name  , amount ,accountId) => {
         console.error(error);
     }
 }
+
+
+//add expense
+
