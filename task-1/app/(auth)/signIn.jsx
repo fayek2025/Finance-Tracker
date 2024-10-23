@@ -6,32 +6,27 @@ import CustomButton from '../../components/CustomButton'
 import { TouchableOpacity } from 'react-native'
 import { Link, router } from 'expo-router'
 import { Alert } from 'react-native'
-import { getUsers, login } from '../../lib/appwrite'
-import { useGlobalContext } from '../../context/globalContex'
+
+
 
 const signIn = () => {
 
-  const {setUser , setLogged} = useGlobalContext();
+
 
   const [submiting , setSubmiting] = useState(false);
-  const [form , setForm] = useState({
-    email: "",
-    password: ""
-  })
+  
 
-        const submit = async () => {
-          if(form.email === "" || form.password === ""){
+  const [user , setUser] = useState("");
+
+        const submit =  () => {
+          if(user === "" ){
             Alert.alert("Error" , "Please fill in all fields")
           }
 
             setSubmiting(true)
             try{
-             await login(form.email , form.password);
-             const user = await getUsers();
-              setUser(user);
-              setLogged(true);
-              console.log(user);
-              router.replace('/home');
+             
+              router.replace('/home' , {user});
 
 
             }catch (error){
@@ -53,28 +48,22 @@ const signIn = () => {
 
 
             <Text className="text-gray-100 font-psemibold text-2xl">Login To {''} 
-            <Text className="text-secondary-100"> CashFlow</Text>
+            <Text className="text-secondary-100"> Our World-Breaking App</Text>
 
 
 
             </Text>
 
             <FormField    
-            title="Email" 
-            placeholder="Enter your email" 
-            value={form.email}
-            handleText={(e) => setForm({...form , email: e})}
+            title="Username" 
+            placeholder="Enter Your Username" 
+            value={user}
+            handleText={(e) => setUser({e})}
             
 
             />
 
-              <FormField 
-              title="Password" 
-              placeholder="Enter your password"
-              value={form.password}
-              handleText={(e) => setForm({...form , password: e})}
-              otherstyles="" 
-            />
+              
 
             <CustomButton title={"Sign in"} 
             handlePress={submit}
@@ -84,17 +73,7 @@ const signIn = () => {
             
             />
 
-            <View className="flex flex-row justify-center items-center mt-5">
-                <Text className="text-gray-100 font-pmedium">Don't have an account? {''}
-                  
-                  <Link href={"/signUp"} className="text-secondary-100">Sign Up</Link>
-                  
-                  
-                   </Text>
-
-
-
-              </View>
+            
           </View>
         
         </ScrollView>

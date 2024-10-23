@@ -54,10 +54,10 @@ const tabs = () => {
         }}/>
 
 
-<Tabs.Screen name='transaction'  
+<Tabs.Screen name='contact'  
         
         options={{
-          title: 'Transaction',
+          title: 'Contact',
           headerShown: false,
           tabBarIcon: ({ focused, color }) => (
             <TabIcon name="monero" color={color} size={25} focused={focused} label = "Trasaction" />
@@ -69,13 +69,13 @@ const tabs = () => {
 
 
 
-        <Tabs.Screen name='create'  
+        <Tabs.Screen name='about'  
         
         options={{
           title: 'Create',
           headerShown: false,
           tabBarIcon: ({ focused, color }) => (
-            <TabIcon name="folder-plus" color={color} size={25} focused={focused} label = "Create" />
+            <TabIcon name="address-book" color={color} size={25} focused={focused} label = "Create" />
           ),
         }}/>
 
